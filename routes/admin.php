@@ -8,5 +8,6 @@ Route::prefix('admin')->group( function () {
 
 	Route::middleware('auth:admin,api-admin')->group( function () {
 		Route::resource('categories', App\Http\Controllers\Admin\CategoriesController::class);
+		Route::resource('sub_categories', App\Http\Controllers\Admin\SubCategoriesController::class);
 	});
 });
