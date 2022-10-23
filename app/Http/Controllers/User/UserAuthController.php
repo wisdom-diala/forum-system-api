@@ -96,4 +96,32 @@ class UserAuthController extends Controller
             'token' => $token
         ]);
     }
+
+    public function logout()
+    {
+        try {
+            if (auth()->user()->currentAccessToken()->delete()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'user logged out successfully.'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => 'an error occured while logging user out'
+                ], 501);
+            }
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'errors' => 'an exceptional error occurred'
+            ], 501);
+        } catch (\Error $e) {
+            return response()->json([
+                'status' => 'failed',
+                'errors' => 'an error occurred'
+            ], 501);
+        }
+    }
 }

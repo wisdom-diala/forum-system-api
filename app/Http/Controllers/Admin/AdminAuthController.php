@@ -36,4 +36,32 @@ class AdminAuthController extends Controller
         ], 200);
     }
 
+    public function logout()
+    {
+        try {
+            if (auth()->user()->tokens()->delete()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'admin logged out successfully.'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'errors' => 'an error occured while logging admin out'
+                ], 501);
+            }
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'errors' => 'an exceptional error occurred'
+            ], 501);
+        } catch (\Error $e) {
+            return response()->json([
+                'status' => 'failed',
+                'errors' => 'an error occurred'
+            ], 501);
+        }
+    }
+
 }
